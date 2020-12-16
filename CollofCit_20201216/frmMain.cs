@@ -130,9 +130,22 @@ namespace CollofCit_20201216
                 MessageBox.Show("Hiba - Sikertelen adatbetöltés");
                 Application.Exit();
             }
-            frmSzerzoLista.FormClosed += (o, e) => frmSzerzoLista = new frmSzerzoLista();
-            frmSzerzo.FormClosed += (o, e) => frmSzerzo = new frmSzerzo();
+            //frmSzerzoLista.FormClosed += (o, e) => frmSzerzoListaFormClosed();
+            //frmSzerzo.FormClosed += (o, e) => frmSzerzoFormClosed();
             InitializeComponent();
+            frmSzerzoLista.FormClosed += frmSzerzoListaClosedEventHandler;
+            frmSzerzo.FormClosed += frmSzerzoClosedEventHandler;
+        }
+
+        private void frmSzerzoListaClosedEventHandler(object sender, object e)
+        {
+            frmSzerzoLista = new frmSzerzoLista();
+            RefreshDGVs();
+        }
+        private void frmSzerzoClosedEventHandler(object sender, object e)
+        {
+            frmSzerzo = new frmSzerzo();
+            RefreshDGVs();
         }
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -203,14 +216,18 @@ namespace CollofCit_20201216
                         x.Nev = nev;
                         x.SzerzoID = szerzoID;
                         conn.Open();
-                        new OleDbCommand($"UPDATE szerzo SET nev = '{x.Nev}' WHERE szerzoID = {x.SzerzoID};", conn).ExecuteNonQuery();
+                        new OleDbCommand($"UPDATE szerzo SET nev = '{nev}' WHERE szerzoID = {szerzoID};", conn).ExecuteNonQuery();
                         conn.Close();
                     }
                 });
             }
             else
             {
+                szerzoID = szerzo.Count + 1;
                 szerzo.Add(new Szerzo(szerzoID, nev));
+                conn.Open();
+                new OleDbCommand($"INSERT INTO szerzo(szerzoID, nev) VALUES ('{szerzoID}', '{nev}');", conn).ExecuteNonQuery();
+                conn.Close();
             }
         }
 
@@ -219,6 +236,9 @@ namespace CollofCit_20201216
             try
             {
                 szerzo.Remove(szerzo.Where(x => x.SzerzoID == szerzoID).FirstOrDefault());
+                conn.Open();
+                new OleDbCommand($"DELETE FROM szerzo WHERE szerzoID = {szerzoID};", conn).ExecuteNonQuery();
+                conn.Close();
             }
             catch (Exception)
             {

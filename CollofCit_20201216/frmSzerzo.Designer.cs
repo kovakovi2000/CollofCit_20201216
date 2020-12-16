@@ -86,7 +86,7 @@
             this.üresŰrlapToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(15, 88);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(247, 59);
+            this.menuStrip1.Size = new System.Drawing.Size(367, 59);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -132,6 +132,7 @@
             this.üresŰrlapToolStripMenuItem.Size = new System.Drawing.Size(72, 55);
             this.üresŰrlapToolStripMenuItem.Text = "Üres űrlap";
             this.üresŰrlapToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.üresŰrlapToolStripMenuItem.Click += new System.EventHandler(this.üresŰrlapToolStripMenuItem_Click);
             // 
             // frmSzerzo
             // 

@@ -27,7 +27,8 @@ namespace CollofCit_20201216
 
         private void frmSzerzo_Load(object sender, EventArgs e)
         {
-            
+            if (string.IsNullOrEmpty(tb_szerzoid.Text))
+                tb_szerzoid.Text = (frmMain.Szerzo.Count() + 1).ToString();
         }
 
         private void mentésToolStripMenuItem_Click(object sender, EventArgs e)
@@ -43,6 +44,12 @@ namespace CollofCit_20201216
         private void tb_szerzoid_TextChanged(object sender, EventArgs e)
         {
             törlésToolStripMenuItem.Enabled = !string.IsNullOrEmpty(tb_szerzoid.Text);
+        }
+
+        private void üresŰrlapToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tb_nev.Text = "";
+            tb_szerzoid.Text = "";
         }
     }
 }
